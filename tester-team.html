@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tester Team Recruitment</title>
+  <title>Tester Applications</title>
+  <link rel="icon" type="image/png" href="logo.png" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
@@ -407,6 +408,77 @@
 
     @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
+    /* Submissions Disabled Overlay */
+    .disabled-wrap { position: relative; }
+    .form-wrap.is-disabled {
+      filter: blur(10px) saturate(0.85);
+      opacity: 0.55;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .disabled-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+    }
+
+    .disabled-card {
+      width: 100%;
+      border-radius: 26px;
+      padding: 18px 18px 16px;
+      background: rgba(0, 0, 0, 0.38);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(26px) saturate(180%);
+      -webkit-backdrop-filter: blur(26px) saturate(180%);
+      box-shadow: inset 0 1px 1px var(--glass-highlight);
+    }
+
+    .disabled-title {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.2px;
+      margin: 0 auto 10px;
+    }
+
+    .disabled-text {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 0 auto 14px;
+      max-width: 440px;
+    }
+
+    .discord-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      user-select: none;
+      transition: all 0.2s ease;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+    .discord-link:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.22); }
+    .discord-link:active { transform: scale(0.98); }
+    .discord-icon { width: 20px; height: 20px; flex: 0 0 auto; }
+
     @media (max-width: 560px) {
       .grid { grid-template-columns: 1fr; gap: 12px; }
       .radio-group { grid-template-columns: 1fr; }
@@ -433,6 +505,10 @@
 
     <div class="body">
       <div class="title" data-i18n="title">Tester Team Application</div>
+
+      <div class="disabled-wrap" id="DisabledWrap">
+        <div class="form-wrap is-disabled" id="FormWrap">
+
 
       <div class="stepper" aria-hidden="true">
         <div class="step active" id="StepChip1" data-i18n="step1">Step 1</div>
@@ -570,7 +646,23 @@
           <div class="status" id="Status"></div>
         </section>
       </form>
-    </div>
+        </div>
+
+        <div class="disabled-overlay" id="DisabledOverlay" aria-live="polite">
+          <div class="disabled-card">
+            <div class="disabled-title" data-i18n="disabledTitle">Submissions disabled</div>
+            <div class="disabled-text" data-i18n="disabledBody">Applications are not being accepted. But you can join our team through our promotion. Details in our Discord server.</div>
+            <a class="discord-link" href="https://discord.com/invite/zTaJUarjPE" target="_blank" rel="noopener">
+              <svg class="discord-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M19.54 4.31A17.2 17.2 0 0 0 15.74 3c-.17.3-.36.7-.5 1.02a16.3 16.3 0 0 0-4.48 0C10.62 3.7 10.43 3.3 10.26 3a17.2 17.2 0 0 0-3.8 1.31C3.9 8.07 3.3 11.74 3.6 15.36a17.5 17.5 0 0 0 5.16 2.64c.42-.57.8-1.18 1.12-1.83-.62-.24-1.21-.53-1.78-.86.15-.11.3-.23.44-.35 3.42 1.6 7.14 1.6 10.52 0 .14.12.29.24.44.35-.57.33-1.16.62-1.78.86.32.65.7 1.26 1.12 1.83a17.5 17.5 0 0 0 5.16-2.64c.35-4.2-.6-7.84-2.76-11.05ZM9.2 13.6c-.67 0-1.22-.62-1.22-1.38 0-.76.54-1.38 1.22-1.38.68 0 1.23.62 1.22 1.38 0 .76-.54 1.38-1.22 1.38Zm5.6 0c-.67 0-1.22-.62-1.22-1.38 0-.76.54-1.38 1.22-1.38.68 0 1.23.62 1.22 1.38 0 .76-.54 1.38-1.22 1.38Z"/>
+          </svg>
+              <span data-i18n="discordBtn">Discord Server</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+</div>
 
     <div class="success-overlay" id="Success">
       <div class="check">
@@ -584,7 +676,7 @@
   <script>
     const WEBHOOK_URL = "https://discord.com/api/webhooks/1475033711585005750/Xf8QZHiXLg0kI7PKVniM3ggRSIuBdjmFWfGQw17OxDu2B09iom47uNfet44wiaE8vOjV";
 
-    const T = {
+        const T = {
       ua: {
         title: "Заявка в команду тестувальників",
         step1: "Етап 1", step2: "Етап 2", step3: "Етап 3",
@@ -607,7 +699,10 @@
         errFill: "Будь ласка, заповніть всі обов'язкові поля.",
         errSend: "Помилка відправки. Спробуйте ще раз.",
         sending: "Відправляю…",
-        sent: "Відправлено ✅"
+        sent: "Відправлено ✅",
+        disabledTitle: "Заявки не приймаються",
+        disabledBody: "Але ви можете стати частиною нашої команди через нашу акцію. Деталі в нашому Discord сервері.",
+        discordBtn: "Discord Server"
       },
       ru: {
         title: "Заявка в команду тестировщиков",
@@ -631,10 +726,13 @@
         errFill: "Пожалуйста, заполните все обязательные поля.",
         errSend: "Ошибка отправки. Попробуйте ещё раз.",
         sending: "Отправляю…",
-        sent: "Отправлено ✅"
+        sent: "Отправлено ✅",
+        disabledTitle: "Заявки не принимаются",
+        disabledBody: "Но вы можете стать частью нашей команды через нашу акцию. Детали в нашем Discord сервере.",
+        discordBtn: "Discord Server"
       },
       en: {
-        title: "Tester Team Application",
+        title: "Tester Applications",
         step1: "Step 1", step2: "Step 2", step3: "Step 3",
         labelFullName: "Full Name", phFullName: "Your full name",
         labelDob: "Date of Birth",
@@ -648,7 +746,6 @@
         labelDiscord: "Discord", phDiscord: "username or username#0000",
         labelRoblox: "Roblox Username", phRoblox: "Your Roblox username",
         labelEmail: "Email", phEmail: "name@example.com",
-
         back: "Back", next: "Next", submit: "Submit",
         yes: "Yes", no: "No",
         successTitle: "Application sent!",
@@ -656,9 +753,13 @@
         errFill: "Please fill all required fields in this step.",
         errSend: "Failed to send. Please try again.",
         sending: "Sending…",
-        sent: "Sent ✅"
+        sent: "Sent ✅",
+        disabledTitle: "Submissions disabled",
+        disabledBody: "Applications are not being accepted. But you can join our team through our promotion. Details in our Discord server.",
+        discordBtn: "Discord Server"
       }
     };
+
 
     // Змінено мову за замовчуванням на англійську
     let CurrentLang = "en";
@@ -668,9 +769,39 @@
     const StatusEl = document.getElementById("Status");
     const SubmitBtn = document.getElementById("SubmitBtn");
 
+
+    const SUBMISSIONS_ENABLED = false;
+    const DISCORD_INVITE_URL = "https://discord.com/invite/zTaJUarjPE";
+
+    const FormWrap = document.getElementById("FormWrap");
+    const DisabledOverlay = document.getElementById("DisabledOverlay");
+
+    
+    function DetectInitialLang() {
+      try {
+        const saved = localStorage.getItem('lang');
+        if (saved && T[saved]) return saved;
+      } catch {}
+      const nav = (navigator.language || '').toLowerCase();
+      if (nav.startsWith('uk') || nav.startsWith('ua')) return 'ua';
+      if (nav.startsWith('ru')) return 'ru';
+      return 'en';
+    }
+
+function ApplySubmissionsState() {
+      if (!FormWrap || !DisabledOverlay) return;
+      FormWrap.classList.toggle("is-disabled", !SUBMISSIONS_ENABLED);
+      DisabledOverlay.style.display = SUBMISSIONS_ENABLED ? "none" : "flex";
+    }
+
+
     function SetLang(lang) {
       CurrentLang = lang;
       const S = T[lang];
+
+      // Page metadata
+      document.documentElement.lang = lang === 'ua' ? 'uk' : lang;
+      document.title = S.title;
 
       document.querySelectorAll('[data-i18n]').forEach((el) => {
         const k = el.getAttribute('data-i18n');
@@ -757,6 +888,10 @@
     }
 
     function NextStep() {
+      if (!SUBMISSIONS_ENABLED) {
+        FlashStatus(T[CurrentLang].disabledTitle, true);
+        return;
+      }
       if (!ValidateStep(Step)) {
         FlashStatus(T[CurrentLang].errFill, true);
         return;
@@ -864,6 +999,11 @@
 
     Form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      if (!SUBMISSIONS_ENABLED) {
+        FlashStatus(T[CurrentLang].disabledTitle, true);
+        return;
+      }
 
       if (!ValidateStep(1) || !ValidateStep(2) || !ValidateStep(3)) {
         FlashStatus(T[CurrentLang].errFill, true);
@@ -988,6 +1128,8 @@
 
     PopulateTimezones();
     StartParticles();
+    ApplySubmissionsState();
+    SetLang(DetectInitialLang());
     
     // Встановлюємо англійську мову за замовчуванням
     SetLang('en');
